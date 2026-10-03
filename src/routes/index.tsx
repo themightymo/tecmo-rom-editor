@@ -2,6 +2,8 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { RomProvider, useRom } from "@/lib/romStore";
 import { RomDropZone, RomToolbar } from "@/components/RomUploader";
+import { GamePlayer } from "@/components/GamePlayer";
+import { savePlayRom } from "@/lib/playRom";
 import { PlayerNameEditor } from "@/components/PlayerNameEditor";
 import { PlayerAbilitiesEditor } from "@/components/PlayerAbilitiesEditor";
 import type { GroupId } from "@/lib/abilities";
@@ -28,7 +30,8 @@ function Index() {
 }
 
 function Shell() {
-  const { rom } = useRom();
+  const { rom, romName } = useRom();
+  const [playing, setPlaying] = useState(false);
   const [tab, setTab] = useState("roster");
   const [advancedTab, setAdvancedTab] = useState("edit");
   // Shared between the roster view and the player editor so clicking a player jumps to them.
@@ -58,9 +61,16 @@ function Shell() {
           <div className="py-8">
             <RomDropZone />
           </div>
+        ) : playing ? (
+          <GamePlayer onExit={() => setPlaying(false)} />
         ) : (
           <>
-            <RomToolbar />
+            <RomToolbar
+              onPlay={() => {
+                savePlayRom(romName ?? "modified.nes", rom);
+                setPlaying(true);
+              }}
+            />
             <Tabs value={tab} onValueChange={setTab}>
               <TabsList className="flex h-auto w-full flex-wrap justify-start">
                 <TabsTrigger value="roster" className="gap-1.5">

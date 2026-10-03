@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useRom } from "@/lib/romStore";
 import { saveFileAs } from "@/lib/download";
 import { Button } from "@/components/ui/button";
-import { Upload, Save, RotateCcw, FileWarning, FileUp } from "lucide-react";
+import { Upload, Save, RotateCcw, FileWarning, FileUp, Gamepad2 } from "lucide-react";
 
 const ACCEPT = ".nes,.bin,application/octet-stream";
 
@@ -71,7 +71,7 @@ export function RomDropZone() {
 }
 
 /** Top-of-page bar once a ROM is loaded: file info, Save ROM As, and secondary actions. */
-export function RomToolbar() {
+export function RomToolbar({ onPlay }: { onPlay: () => void }) {
   const { rom, romName, romChecksum, hasINES, edits, clearEdits } = useRom();
   if (!rom) return null;
 
@@ -99,6 +99,9 @@ export function RomToolbar() {
               <RotateCcw className="size-4" /> Undo all changes
             </Button>
           )}
+          <Button variant="outline" onClick={onPlay}>
+            <Gamepad2 className="size-4" /> Save and Play Game
+          </Button>
           <Button onClick={() => saveFileAs(romName ?? "modified.nes", rom)}>
             <Save className="size-4" /> Save ROM As…
           </Button>

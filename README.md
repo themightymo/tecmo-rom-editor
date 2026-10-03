@@ -81,7 +81,17 @@ All-Star team slots point back to the real player on their home team, so editing
 
 ![Player card](docs/screenshots/player-card.png)
 
-### Custom helmets and headshots
+### Play the game
+
+Click **Save and Play Game** in the toolbar to test your changes without leaving the page. This saves a copy of the current ROM in your browser (not as a file) and starts it in a built-in NES emulator ([JSNES](https://github.com/bfirsh/jsnes)), with sound. The player works like the one in [Retro-Game-Emulator-Forked](https://github.com/themightymo/Retro-Game-Emulator-Forked):
+
+- **Keyboard controls:** arrows to move, **A**/**Q** for A, **S**/**O** for B, **Enter** for Start, **Tab** for Select. Click the game screen first. Press **Esc** to release the keyboard. Click any keycap to remap it. Your bindings are remembered in this browser.
+- **Game speed:** set 25% to 200% (remembered). 100% targets 60 frames per second, whatever your display's refresh rate.
+- **Check game speed:** measures 10 seconds of play and reports the actual frame rate and any pauses.
+- **Fullscreen.**
+
+The game keeps running the version you saved. If you edit more, click **Back to editor**, then **Save and Play Game** again.
+
 
 There's a pixel painter for 16×16 team helmets and 32×32 player headshots. It has pencil, eraser, fill, eyedropper, mirror, grid, undo/redo, and the NES palette. You can start from the original art, from another team or player, or from a blank canvas, and you can download your work as a PNG.
 
@@ -123,6 +133,7 @@ The editor keeps these special forms the game supports:
 
 - The ROM is read and edited in memory in your browser. It is never uploaded.
 - Custom helmets, headshots, data layouts and the detected ratings offset are saved in your browser's `localStorage`.
+- **Save and Play Game** keeps a copy of the last ROM you played in `localStorage`, along with your emulator controls and speed.
 - Original face portraits are loaded as images from the open-source [tsbtools](https://github.com/BAD-AL/tsbtools) project on GitHub. This is the only network request the app makes, and no ROM data is sent with it.
 
 ---
@@ -152,6 +163,8 @@ src/
     customHelmets.ts       Custom helmet storage (browser only)
     diff.ts                IPS patch builder
     checksum.ts            CRC32 and iNES header detection
+    emulator.ts            JSNES runner: timing, audio, speed check
+    playRom.ts             The ROM snapshot "Save and Play Game" runs
 ```
 
 ---
