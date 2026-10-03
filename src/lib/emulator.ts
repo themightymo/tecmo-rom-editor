@@ -92,8 +92,12 @@ export function createEmulator(canvas: HTMLCanvasElement, rom: Uint8Array, speed
       writeCursor = (writeCursor + 1) & SAMPLE_MASK;
     },
   });
-  // JSNES wants a byte string (one char per byte) or a byte array.
-  nes.loadROM(new Uint8Array(rom));
+  // JSNES 1.x reads the ROM as a byte string, one char per byte.
+  let romString = "";
+  for (let i = 0; i < rom.length; i += 0x8000) {
+    romString += String.fromCharCode(...rom.subarray(i, i + 0x8000));
+  }
+  nes.loadROM(romString);
 
   function resetTiming() {
     lastFrameTime = null;
