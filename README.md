@@ -38,6 +38,16 @@ Because `npm run build` inlines all JavaScript, CSS and images into one `dist/in
 
 Every push to `main` triggers a GitHub Actions workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) that runs the build and publishes it to GitHub Pages at **https://themightymo.github.io/tecmo-rom-editor/**. The site updates about a minute after each push, and the built file is never committed to the repo. To keep an offline copy, open the link and use your browser's **Save Page As…**.
 
+### Build check before pushing
+
+A git `pre-push` hook in [`.githooks/`](.githooks/pre-push) runs `npm run build` before every push. This keeps your local `dist/index.html` up to date and cancels the push if the build fails. Turn it on once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+To skip it for a single push, use `git push --no-verify`.
+
 ---
 
 ## Features
