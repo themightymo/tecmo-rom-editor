@@ -4,6 +4,8 @@ A browser-based editor for Tecmo Super Bowl (NES) ROMs, styled after the game's 
 
 Everything runs in your browser. Your ROM is never uploaded anywhere.
 
+**Try it online: https://themightymo.github.io/tecmo-rom-editor/** (no install needed)
+
 > **You must supply your own legally owned ROM.** This tool ships with no ROM data.
 
 ![Team Roster view](docs/screenshots/team-roster.png)
@@ -30,7 +32,11 @@ Then open the URL Vite prints (usually http://localhost:5173) and drop in your `
 | `npm run lint` | Run ESLint |
 | `npm run format` | Format the code with Prettier |
 
-Because `npm run build` inlines all JavaScript, CSS and images into one `dist/index.html`, you can host the result on any static web server.
+Because `npm run build` inlines all JavaScript, CSS and images into one `dist/index.html`, you can host the result on any static web server, or open it straight from disk.
+
+### Online version
+
+Every push to `main` triggers a GitHub Actions workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) that runs the build and publishes it to GitHub Pages at **https://themightymo.github.io/tecmo-rom-editor/**. The site updates about a minute after each push, and the built file is never committed to the repo. To keep an offline copy, open the link and use your browser's **Save Page As…**.
 
 ---
 
